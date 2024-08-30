@@ -1,10 +1,10 @@
 import React from 'react';
-import CRUDForm from './CRUDForm';
+import Quiz from './Quiz';
 
 const App: React.FC = () => {
 	return (
 		<div className="App">
-			<CRUDForm />
+			<Quiz />
 		</div>
 	);
 };

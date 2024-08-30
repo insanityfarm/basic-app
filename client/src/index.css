@@ -7,7 +7,55 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+#questions li {
+	position: absolute;
+	top: 65px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	opacity: 0;
+	z-index: -1;
+	display: grid;
+	place-items: center;
+}
+
+#questions li.current {
+	opacity: 1;
+	z-index: 1;
+}
+
+.footer {
+	display: block;
+	margin-top: 24px;
+}
+
+form {
+	height: 100%;
+}
+
+button {
+	float: right;
+	background-color: #551edf;
+	font-size: 32px;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
+}
+
+input[type='text'] {
+	font-size: 32px;
+	padding: 10px 20px;
+	border-radius: 3px;
+	border: 2px solid #551edf;
+}
+
+textarea {
+	width: 90vw;
+	max-width: 550px;
+	border: 2px solid #551edf;
+	font-size: 18px;
+	padding: 10px 20px;
+	height: 8em;
 }
