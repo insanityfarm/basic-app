@@ -1,0 +1,267 @@
+body {
+	--quiz-width: 650px;
+	--transition-duration: 600ms;
+	--color-primary: #551edf;
+	--color-secondary: hsl(230, 50%, 60%);
+	--color-disabled: #aaaaaa;
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	box-sizing: border-box;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+h1 {
+	text-align: center;
+}
+
+ol {
+	margin: 0;
+	padding: 0;
+}
+
+input[type='radio'] + label {
+	display: inline-block;
+}
+
+@keyframes hideInitialTransition {
+	0% {
+		--transition-duration: 0ms;
+	}
+	100% {
+		--transition-duration: inherit;
+	}
+}
+
+#steps {
+	--cube-width: var(--quiz-width);
+	--cube-height: 500px;
+	position: relative;
+	width: var(--cube-width);
+	height: var(--cube-height);
+	margin: 0 auto;
+	padding: 0;
+	animation: hideInitialTransition 100ms forwards;
+}
+
+#steps li {
+	position: absolute;
+	top: 35px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: grid;
+	place-items: center;
+	transform: rotateY(90deg) translateZ(calc(var(--cube-width) / 2));
+	transform-style: preserve-3d;
+	filter: brightness(120%);
+	transition: transform var(--transition-duration) ease-out,
+		filter var(--transition-duration) ease-out,
+		box-shadow var(--transition-duration) ease-out;
+	box-shadow: none;
+	border: 2px solid #000;
+	list-style-type: none;
+}
+
+label {
+	display: inline-block;
+	margin-bottom: 10px; /* Optional: spacing between radio button + label pairs */
+}
+
+#steps li fieldset {
+	width: 90vw;
+	max-width: 550px;
+	display: grid;
+	border: none;
+	border-radius: 6px;
+	padding: 10px 20px;
+}
+
+#steps li fieldset[role='radiogroup'] .answer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+}
+
+#steps li fieldset[role='radiogroup'] input[type='radio'] {
+	display: inline-flex;
+	align-items: flex-start;
+	margin-right: 10px;
+}
+
+#steps li fieldset[role='radiogroup'] label {
+	display: inline-flex;
+	width: calc(100% - 30px);
+}
+
+@keyframes fixSafariLegendBug {
+	0% {
+		width: 100%;
+	}
+	100% {
+		width: var(--quiz-width);
+	}
+}
+
+#steps li fieldset legend {
+	/* width: var(--quiz-width); */
+	text-align: center;
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 1em;
+	width: 100%;
+	max-width: 100%;
+	animation: fixSafariLegendBug 10ms forwards;
+}
+
+#steps li.done {
+	transform: rotateY(-90deg) translateZ(calc(var(--cube-width) / 2));
+	filter: brightness(80%);
+}
+
+#steps li.current {
+	transform: rotate(0deg) translateZ(calc(var(--cube-width) / 2));
+	filter: brightness(100%);
+	box-shadow: inset 0px 0px 200px rgba(0, 0, 0, 0.02);
+	z-index: 3;
+}
+
+#steps li:nth-child(4n + 0) {
+	background-color: #d0a3ff;
+}
+
+#steps li:nth-child(4n + 1) {
+	background-color: #fff996;
+}
+
+#steps li:nth-child(4n + 2) {
+	background-color: #92d8ff;
+}
+
+#steps li:nth-child(4n + 3) {
+	background-color: #c3ffca;
+}
+
+/* prevent interior steps (not first or last) from appearing during reset */
+#steps li:not(:first-child):not(:last-child):not(.done):not(.current),
+#steps li:first-child.current ~ li:not(.current):not(.done):not(:last-child) {
+	opacity: 0;
+}
+
+@property --gradient-color-left {
+	syntax: '<color>';
+	initial-value: transparent;
+	inherits: false;
+}
+
+@property --gradient-color-right {
+	syntax: '<color>';
+	initial-value: transparent;
+	inherits: false;
+}
+
+#steps li::before {
+	--gradient-color-left: transparent;
+	--gradient-color-right: rgba(255, 255, 255, 0.4);
+	transition: --gradient-color-left var(--transition-duration) ease-out,
+		--gradient-color-right var(--transition-duration) ease-out;
+	content: '';
+	display: block;
+	position: absolute;
+	background: linear-gradient(
+		to right,
+		var(--gradient-color-left),
+		var(--gradient-color-right)
+	);
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	pointer-events: none;
+}
+
+#steps li.current::before {
+	--gradient-color-left: transparent;
+	--gradient-color-right: transparent;
+}
+
+#steps li.done::before {
+	--gradient-color-left: rgba(0, 0, 0, 0.2);
+	--gradient-color-right: transparent;
+}
+
+.footer {
+	display: block;
+	margin: 24px auto 0;
+	width: var(--quiz-width);
+}
+
+form {
+	height: 100%;
+}
+
+#status {
+	float: left;
+}
+
+#statusLabel {
+	margin: 0;
+}
+
+button {
+	float: right;
+	background-color: var(--color-primary);
+	font-size: 32px;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
+}
+
+button:disabled {
+	background-color: var(--color-disabled);
+	cursor: not-allowed;
+}
+
+input[type='text'] {
+	font-size: 32px;
+	padding: 10px 20px;
+	border-radius: 6px;
+	border: 2px solid var(--color-primary);
+	width: calc(100% - 40px);
+}
+
+textarea {
+	width: calc(100% - 40px);
+	max-width: 550px;
+	border: 2px solid var(--color-primary);
+	border-radius: 6px;
+	font-size: 26px;
+	padding: 10px 20px;
+	height: 8em;
+	font-family: inherit;
+}
+
+label {
+	cursor: pointer;
+	font-size: 26px;
+}
+
+input[type='radio'] {
+	margin-right: 5px;
+}

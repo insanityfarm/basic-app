@@ -1,0 +1,18 @@
+{
+	"name": "My Fun Quiz",
+	"questions": [
+		{
+			"questionText": "What is your name?",
+			"type": "short"
+		},
+		{
+			"questionText": "Why is the sky blue?",
+			"type": "long"
+		},
+		{
+			"questionText": "How are you feeling?",
+			"type": "choice",
+			"choices": ["Good", "Great", "Fantastic!", "PERFECT"]
+		}
+	]
+}
